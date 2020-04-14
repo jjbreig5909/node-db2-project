@@ -20,6 +20,20 @@ server.get('/',(req,res)=>{
     });
 });
 
+server.get("/:id", (req, res) => {
+  const { id } = req.params;
+
+  db("car-dealer")
+    .where({ id })
+    .first()
+    .then((car) => {
+      res.json(car);
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "Failed to retrieve car" });
+    });
+});
+
 
 server.post("/", (req, res) => {
   const carData = req.body;
